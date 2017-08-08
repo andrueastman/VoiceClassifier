@@ -1,6 +1,7 @@
 package com.punkhazard.kuzan.voiceclassifier;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -20,6 +21,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -30,8 +32,10 @@ import java.util.HashMap;
 public class AudioRecorder extends Thread{
     private boolean isRecording= false;
     AudioRecord audioInput;
-    int sampleRate=44100;
+    int sampleRate=8000;
     private Context context;
+    public static HashMap<String, String> params;
+    public static HashMap<String, String> actualParams;
 
     public AudioRecorder(Context context){
         this.context=context;
@@ -42,12 +46,13 @@ public class AudioRecorder extends Thread{
         int minSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
         audioInput = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT,minSize);
 
-        HashMap<String, String> params = new HashMap<String,String>();
-        short[] lin = new short[1024];
+        params = new HashMap<String,String>();
+        actualParams = new HashMap<String,String>();
+        short[] lin = new short[4096];
         audioInput.startRecording();
         while(this.isRecording){
             audioInput.read(lin,0,lin.length);
-            processAudio(lin,params);
+            processAudio(lin,params,actualParams);
         }
         audioInput.stop();// finished recording
 
@@ -58,24 +63,30 @@ public class AudioRecorder extends Thread{
         this.isRecording=isRecording;
     }
 
-    private void processAudio(short[] lin, HashMap<String, String> params) {
+    private void processAudio(short[] lin, HashMap<String, String> params, HashMap<String, String> actualParams) {
         Complex [] complex = new Complex[lin.length];
         for (int i=0; i<lin.length;i++){
-            //double r =(double)lin[i]/32768.0;
-            double r =(double)lin[i];
+            double r =(double)lin[i]/32768.0;
+            //double r =(double)lin[i];
             complex[i] = new Complex(r,0);
         }
 
         Complex[] fft = FFT.fft(complex);
-        double peak =0;
-        for (int i=0; i<lin.length;i++){
+        int index=0;
+        double peak =fft[0].abs();
+        for (int i=0; i<(lin.length/2);i++){
             if(fft[i].abs() > peak){
                 peak=fft[i].abs();
+                index=i;
             }
-            params.put(""+params.size(),""+fft[i].abs());
+
         }
 
-        //double frequency =(sampleRate*peak)/lin.length;
+        double frequency =(double) (sampleRate*index)/lin.length;
+        if(frequency < 280){
+            params.put(""+params.size(),""+frequency);
+        }
+        actualParams.put(""+actualParams.size(),""+frequency);
 
 
         //Log.d("AVERAGE_FFT",""+frequency);
@@ -89,12 +100,17 @@ public class AudioRecorder extends Thread{
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        //try {
+                        try {
                         //Process os success response
-                        Log.d("RESPONSE",response.toString());
-                        //} catch (JSONException e) {
-                        // e.printStackTrace();
-                        //}
+                            String gender = response.getJSONObject("results").getString("gender");
+                            Intent goToNextActivity = new Intent(context, ResultActivity.class);
+                            goToNextActivity.putExtra("GENDER", gender);
+                            context.startActivity(goToNextActivity);
+                            Log.d("RESPONSE",response.toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 }, new Response.ErrorListener() {
             @Override

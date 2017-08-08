@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
                     Handler handler = new Handler();
                     int t=0;
-                    handler.postDelayed(new FinishRecording(),(recordingTime+1)*1000);
                     handler.postDelayed(new UpdateUI(handler,t),1000);
+                    handler.postDelayed(new FinishRecording(),(recordingTime+1)*1000);
                 }
                 else{
                     NetworkUtils.showNoNetworkDialog(MainActivity.this);
@@ -63,6 +63,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        textView.setText(R.string.fab_text);
+        fab.setVisibility(View.VISIBLE);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,9 +96,10 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            fab.setVisibility(View.VISIBLE);
+            fab.setVisibility(View.INVISIBLE);
             recorder.setRecording(false);
-            Snackbar.make(fab, "Recording Finished", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            //Snackbar.make(fab, "Recording Finished", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            textView.setText("Recording Finished");
         }
     }
 
@@ -107,12 +114,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void run() {
+
             if(fab.getVisibility()==View.GONE) {
                 t++;
                 handler.postDelayed(this, 1000);
+                textView.setText(t+"");
             }
-            textView.setGravity(Gravity.CENTER_HORIZONTAL);
-            textView.setText(t+"");
+
         }
     }
 }
