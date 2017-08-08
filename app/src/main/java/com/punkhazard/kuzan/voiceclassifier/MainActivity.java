@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,19 +40,24 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+                if(NetworkUtils.isNetworkAvailable(MainActivity.this)){
+                    Snackbar.make(view, "Recording Started", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    //textView.setText("Recording ...");
+                    fab.setVisibility(View.GONE);
 
-                Snackbar.make(view, "Recording Started", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                textView.setText("Recording ...");
-                fab.setVisibility(View.GONE);
+                    recorder =new AudioRecorder(MainActivity.this);
+                    recorder.setRecording(true);
+                    recorder.start();
 
-                recorder =new AudioRecorder();
-                recorder.setRecording(true);
-                recorder.start();
+                    Handler handler = new Handler();
+                    int t=0;
+                    handler.postDelayed(new FinishRecording(),(recordingTime+1)*1000);
+                    handler.postDelayed(new UpdateUI(handler,t),1000);
+                }
+                else{
+                    NetworkUtils.showNoNetworkDialog(MainActivity.this);
+                }
 
-                Handler handler = new Handler();
-                int t=0;
-                handler.postDelayed(new FinishRecording(),recordingTime*1000);
-                handler.postDelayed(new UpdateUI(handler,t),1000);
 
             }
         });
@@ -105,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 t++;
                 handler.postDelayed(this, 1000);
             }
+            textView.setGravity(Gravity.CENTER_HORIZONTAL);
             textView.setText(t+"");
         }
     }

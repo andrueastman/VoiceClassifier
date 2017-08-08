@@ -26,7 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_btn_speak_now" />
+        app:backgroundTint="@android:color/holo_blue_dark"
+        app:fabSize="normal" />
 
     <include layout="@layout/content_main" />
 
