@@ -1,25 +1,19 @@
-package com.punkhazard.kuzan.voiceclassifier;
+package com.punkhazard.kuzan.voiceclassifier.helpers;
 
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.punkhazard.kuzan.voiceclassifier.activities.ResultActivity;
+import com.punkhazard.kuzan.voiceclassifier.utils.Complex;
+import com.punkhazard.kuzan.voiceclassifier.utils.FFT;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,7 +58,7 @@ public class AudioRecorder extends Thread{
     }
 
     private void processAudio(short[] lin, HashMap<String, String> params, HashMap<String, String> actualParams) {
-        Complex [] complex = new Complex[lin.length];
+        Complex[] complex = new Complex[lin.length];
         for (int i=0; i<lin.length;i++){
             double r =(double)lin[i]/32768.0;
             //double r =(double)lin[i];
@@ -84,9 +78,9 @@ public class AudioRecorder extends Thread{
 
         double frequency =(double) (sampleRate*index)/lin.length;
         if(frequency < 280){
-            params.put(""+params.size(),""+frequency);
+            params.put(""+params.size(),""+frequency);          //filter data to be sent for processing to server
         }
-        actualParams.put(""+actualParams.size(),""+frequency);
+        actualParams.put(""+actualParams.size(),""+frequency);// data to display on graph. No need to filter
 
 
         //Log.d("AVERAGE_FFT",""+frequency);

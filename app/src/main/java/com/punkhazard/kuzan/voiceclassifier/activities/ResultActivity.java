@@ -1,6 +1,5 @@
-package com.punkhazard.kuzan.voiceclassifier;
+package com.punkhazard.kuzan.voiceclassifier.activities;
 
-import android.renderscript.Double2;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -8,6 +7,8 @@ import android.widget.TextView;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.punkhazard.kuzan.voiceclassifier.helpers.AudioRecorder;
+import com.punkhazard.kuzan.voiceclassifier.R;
 
 public class ResultActivity extends AppCompatActivity {
 

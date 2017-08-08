@@ -1,4 +1,4 @@
-package com.punkhazard.kuzan.voiceclassifier;
+package com.punkhazard.kuzan.voiceclassifier.utils;
 
 /**
  * Created by Kuzan on 07/08/2017.

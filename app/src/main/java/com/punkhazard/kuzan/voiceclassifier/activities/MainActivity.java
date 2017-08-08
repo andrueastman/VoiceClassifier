@@ -1,24 +1,20 @@
-package com.punkhazard.kuzan.voiceclassifier;
+package com.punkhazard.kuzan.voiceclassifier.activities;
 
-import android.media.AudioFormat;
-import android.media.AudioRecord;
-import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.util.Random;
+import com.punkhazard.kuzan.voiceclassifier.helpers.AudioRecorder;
+import com.punkhazard.kuzan.voiceclassifier.R;
+import com.punkhazard.kuzan.voiceclassifier.helpers.NetworkUtils;
+import com.punkhazard.kuzan.voiceclassifier.helpers.InfoUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        InfoUtils.showWelcomeDialog(MainActivity.this);
     }
 
     @Override
@@ -86,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            InfoUtils.showInfoDialog(MainActivity.this);
             return true;
         }
 
