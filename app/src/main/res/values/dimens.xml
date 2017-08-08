@@ -1,4 +1,4 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="design_fab_size_normal">75dp</dimen>
+    <dimen name="design_fab_size_normal">70dp</dimen>
 </resources>

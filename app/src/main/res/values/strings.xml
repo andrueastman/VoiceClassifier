@@ -4,7 +4,7 @@
     <string name="fab_text">Tap the button to start recording</string>
     <string name="no_internet_available">No Internet Available</string>
     <string name="no_internet_available_extnd">Unable to detect an internet connection. Please turn it on in your network settings.</string>
-    <string name="settings">About</string>
+    <string name="settings">Some Advice</string>
     <string name="dismiss">Dismiss</string>
     <string name="info_message">You are not helpless. You will find your way.</string>
     <string name="welcome_message">A 20 second voice sample will be recorded once you click the button</string>
