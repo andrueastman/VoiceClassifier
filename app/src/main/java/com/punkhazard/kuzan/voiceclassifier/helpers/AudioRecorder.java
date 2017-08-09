@@ -88,7 +88,7 @@ public class AudioRecorder extends Thread{
     }
 
     public void postData(HashMap<String, String> params){
-        String url = "http://192.168.2.100:5000/backend/api/v1.0/classifier";
+        String url = "http://188.226.203.244/backend/api/v1.0/classifier";
 
         JsonObjectRequest request_json = new JsonObjectRequest(url, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
