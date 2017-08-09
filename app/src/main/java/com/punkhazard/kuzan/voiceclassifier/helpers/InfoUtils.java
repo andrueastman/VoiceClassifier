@@ -1,5 +1,6 @@
 package com.punkhazard.kuzan.voiceclassifier.helpers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,6 +36,24 @@ public class InfoUtils {
         builder.setPositiveButton(R.string.proceed, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public static void showServerDownDialog(final Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(R.string.server_message)
+                .setTitle(R.string.server_title);
+
+        builder.setPositiveButton(R.string.proceed, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+                Activity activity= (Activity) context;
+                Intent intent = activity.getIntent();
+                activity.finish();
+                activity.startActivity(intent);
             }
         });
         AlertDialog dialog = builder.create();

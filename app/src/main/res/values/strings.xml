@@ -9,6 +9,8 @@
     <string name="info_message">You are not helpless. You will find your way.</string>
     <string name="welcome_message">A 20 second voice sample will be recorded once you click the button</string>
     <string name="welcome_title">Hey!</string>
+    <string name="server_message">Seems like something has blown up with our code. You viewing this does not fix this. But do not worry, Top men are now aware</string>
+    <string name="server_title">Don\'t Panic!</string>
     <string name="info_title">About</string>
     <string name="proceed">Continue</string>
 </resources>

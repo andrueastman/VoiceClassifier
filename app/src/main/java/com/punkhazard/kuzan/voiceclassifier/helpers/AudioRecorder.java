@@ -110,6 +110,7 @@ public class AudioRecorder extends Thread{
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
+                InfoUtils.showServerDownDialog(context);
             }
         });
 
