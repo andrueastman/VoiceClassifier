@@ -26,7 +26,7 @@ import java.util.HashMap;
 public class AudioRecorder extends Thread{
     private boolean isRecording= false;
     AudioRecord audioInput;
-    int sampleRate=8000;
+    int sampleRate=44100;
     private Context context;
     public static HashMap<String, String> params;
     public static HashMap<String, String> actualParams;
@@ -77,7 +77,7 @@ public class AudioRecorder extends Thread{
         }
 
         double frequency =(double) (sampleRate*index)/lin.length;
-        if(frequency < 280){
+        if(frequency < 280 && frequency > 0){
             params.put(""+params.size(),""+frequency);          //filter data to be sent for processing to server
         }
         actualParams.put(""+actualParams.size(),""+frequency);// data to display on graph. No need to filter
@@ -96,11 +96,14 @@ public class AudioRecorder extends Thread{
                     public void onResponse(JSONObject response) {
                         try {
                         //Process os success response
+                            Log.d("RESPONSE",response.toString());
                             String gender = response.getJSONObject("results").getString("gender");
+                            String id = response.getJSONObject("results").getString("id");
                             Intent goToNextActivity = new Intent(context, ResultActivity.class);
                             goToNextActivity.putExtra("GENDER", gender);
+                            goToNextActivity.putExtra("RECORD", id);
                             context.startActivity(goToNextActivity);
-                            Log.d("RESPONSE",response.toString());
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

@@ -13,4 +13,6 @@
     <string name="server_title">Don\'t Panic!</string>
     <string name="info_title">About</string>
     <string name="proceed">Continue</string>
+    <string name="result">Seems like the voice belongs to me!</string>
+    <string name="questionResult">Did I get it right? Tap the button if wrong </string>
 </resources>
