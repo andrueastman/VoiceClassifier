@@ -1,9 +1,9 @@
 *.iml
 AndroidSource/.gradle
 AndroidSource/local.properties
-AndroidSource//.idea/workspace.xml
-AndroidSource//.idea/libraries
+AndroidSource/.idea/workspace.xml
+AndroidSource/.idea/libraries
 AndroidSource/.DS_Store
-AndroidSource//build
-AndroidSource//captures
+AndroidSource/build
+AndroidSource/captures
 AndroidSource/.externalNativeBuild
