@@ -8,3 +8,4 @@ AndroidSource/build
 AndroidSource/captures
 AndroidSource/.externalNativeBuild
 *.pyc
+Documentation/UserGuide/UserGuider.synctex.gz
