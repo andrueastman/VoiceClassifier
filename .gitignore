@@ -7,3 +7,4 @@ AndroidSource/.DS_Store
 AndroidSource/build
 AndroidSource/captures
 AndroidSource/.externalNativeBuild
+*.pyc
